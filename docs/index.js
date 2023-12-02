@@ -7,14 +7,14 @@ function updateUI()
   
     let canvas = document.getElementById('canvas');
 
-    let height = canvas.height;
-    let width = canvas.width;
+    let maxHeight = canvas.height;
+    let maxWidth = canvas.width;
 
     let ctx = canvas.getContext('2d');
 
-    let view = new View(ctx);
+    let view = new View(ctx, maxWidth, maxHeight);
 
-    view.addCharge(width/2, height/2, 1);
+    view.addCharge(maxWidth/2, maxHeight/2, 1);
 
     view.draw();
 }
