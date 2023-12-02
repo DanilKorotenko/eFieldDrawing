@@ -21,10 +21,12 @@ class View
 ///////////////////////////////////////////////////////////////////////////////
     drawTraces(charge)
     {
-        let thetaStep = 360 / View.numTraces;
+        let degreesStep = 360 / View.numTraces;
         
-        for(let theta = 0; theta < 360; theta = theta +thetaStep)
+        for(let degrees = 0; degrees < 360; degrees = degrees +degreesStep)
         {
+            let theta = this.degreesToRadians(degrees);
+            
             let polar = new Polar(0, theta);
             polar.setCenter(charge.x, charge.y);
             let point = polar.toCartesian();
@@ -151,4 +153,11 @@ class View
             point.y < 0 ||
             point.y > this.maxHeight;
     }
+
+    degreesToRadians(degrees)
+    {
+        let pi = Math.PI;
+        return degrees * (pi/180);
+    }
+
 }
