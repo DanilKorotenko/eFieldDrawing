@@ -9,6 +9,7 @@ class Charge
         this.y = anY;
         this.intensity = anIntensity;
         this.index = anIndex;
+        this.isPositive = anIntensity >= 0;
     }
 
     draw()

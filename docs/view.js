@@ -26,7 +26,7 @@ class View
         for(let degrees = 0; degrees < 360; degrees = degrees +degreesStep)
         {
             let theta = this.degreesToRadians(degrees);
-            
+
             let polar = new Polar(0, theta);
             polar.setCenter(charge.x, charge.y);
             let point = polar.toCartesian();
@@ -44,15 +44,21 @@ class View
                 if(index >= 0 && index != charge.index)
                 {
                     this.ctx.lineTo(point.x, point.y);
+                    this.ctx.stroke();
+                    let ch = this.charges[index];
+                    let deltaTheta = this.angleRadians(point, {x: ch.x, y: ch.y });
 
-                    break;
+                    polar.theta = deltaTheta;
+                    polar.r = 0;
+
+
+                    // break;
                 }
             }
             while(!this.isPointOutOfBounds(point));
             this.ctx.lineTo(point.x, point.y);
             this.ctx.stroke();
         }
-    
     }
 
     draw()
@@ -66,6 +72,28 @@ class View
     }
 
 ///////////////////////////////////////////////////////////////////////////////
+
+    angleRadians(anchorPoint, point)
+    {
+        return Math.atan2(anchorPoint.y - point.y, anchorPoint.x - point.x) * 180 / Math.PI + 180
+    }
+
+// const angle = (anchor, point) => Math.atan2(anchor.y - point.y, anchor.x - point.x) * 180 / Math.PI + 180;
+
+// const a = {
+// 	x: 20,
+// 	y: 20
+// };
+
+// const p = {
+// 	x: 0,
+// 	y: 0
+// };
+
+// angle(a, p); // 225
+
+// // angle in degrees, from example, same data
+// angleDeg = Math.atan2(a.y - p.y, a.x - p.x) * 180 / Math.PI; // 45
 
     getIndexOfMaxPotential(point)
     {
