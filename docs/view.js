@@ -1,7 +1,7 @@
 
 class View
 {
-    static numTraces = 5;
+    static numTraces = 10;
 
     constructor(ctx, maxWidth, maxHeight)
     {
@@ -54,6 +54,21 @@ class View
     }
 
 ///////////////////////////////////////////////////////////////////////////////
+
+    calculatePotentialsForPoint(point)
+    {
+        let potentials = [];
+
+        for (let i=0; i<this.charges.length; i++)
+        {
+            // let charge = this.charges[i];
+            // charge.draw();
+            // this.drawTraces(charge);
+        }        
+
+        return potentials;
+    }    
+
     isPointOutOfBounds(point)
     {
         return point.x < 0 || 
