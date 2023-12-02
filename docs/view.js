@@ -33,26 +33,31 @@ class View
 
             this.ctx.beginPath();
             this.ctx.moveTo(point.x, point.y);
-            let points = [];
 
             do
             {                
                 polar.r++;
-                point = polar.toCartesian(charge.x, charge.y);
+                point = polar.toCartesian();
 
                 let index = this.getIndexOfMaxPotential(point);
                 if(index >= 0 && index != charge.index)
                 {
-                    this.ctx.lineTo(point.x, point.y);
-                    this.ctx.stroke();
-                    let ch = this.charges[index];
-                    let deltaTheta = this.angleRadians(point, {x: ch.x, y: ch.y });
+                    // this.ctx.lineTo(point.x, point.y);
+                    // this.ctx.stroke();
+                    // let ch = this.charges[index];
+                    // let deltaTheta = this.angleRadians(point, {x: ch.x, y: ch.y });
+                    // let deltaDegrees = this.angleDegrees(point, {x: ch.x, y: ch.y });
+                    // if (deltaDegrees == 180 || deltaDegrees == 0)
+                    // {
+                    //     break;
+                    // }
+                    // deltaDegrees = degrees + deltaDegrees;
+                    // polar.theta = this.degreesToRadians(deltaDegrees);
+                    // polar.r = 0;
+                    // polar.setCenter(point.x, point.y);
 
-                    polar.theta = deltaTheta;
-                    polar.r = 0;
 
-
-                    // break;
+                    break;
                 }
             }
             while(!this.isPointOutOfBounds(point));
@@ -76,6 +81,12 @@ class View
     angleRadians(anchorPoint, point)
     {
         return Math.atan2(anchorPoint.y - point.y, anchorPoint.x - point.x) * 180 / Math.PI + 180
+    }
+
+    angleDegrees(anchorPoint, point)
+    {
+        return Math.atan2(anchorPoint.y - point.y, anchorPoint.x - point.x) * 180 / Math.PI;
+        // return Math.atan2(anchorPoint.y - point.y, anchorPoint.x - point.x) * 180 / Math.PI + 180
     }
 
 // const angle = (anchor, point) => Math.atan2(anchor.y - point.y, anchor.x - point.x) * 180 / Math.PI + 180;
