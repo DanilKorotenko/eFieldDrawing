@@ -2,12 +2,13 @@ class Charge
 {
     static radius = 10;
 
-    constructor(aCtx, anX, anY, anIntensity)
+    constructor(aCtx, anX, anY, anIntensity, anIndex)
     {
         this.ctx = aCtx;
         this.x = anX;
         this.y = anY;
         this.intensity = anIntensity;
+        this.index = anIndex;
     }
 
     draw()

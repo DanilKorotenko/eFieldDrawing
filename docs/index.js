@@ -14,7 +14,8 @@ function updateUI()
 
     let view = new View(ctx, maxWidth, maxHeight);
 
-    view.addCharge(maxWidth/2, maxHeight/2, 1);
+    view.addCharge(maxWidth/2-100, maxHeight/2, 1);
+    view.addCharge(maxWidth/2+100, maxHeight/2, 1);
 
     view.draw();
 }
