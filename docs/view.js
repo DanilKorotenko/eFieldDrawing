@@ -12,14 +12,13 @@ class View
     }
 
 ///////////////////////////////////////////////////////////////////////////////
-    addCharge(anX, anY, anIntensity)
+    addCharge(anX, anY, aCharge)
     {
-        let index = this.charges.length;
-        this.charges.push(new Charge(this.ctx, anX, anY, anIntensity, index));
+        this.charges.push(new Charge(this.ctx, anX, anY, aCharge));
     }
 
 ///////////////////////////////////////////////////////////////////////////////
-    drawTraces(charge)
+    drawTraces(aCharge)
     {
         let degreesStep = 360 / View.numTraces;
         
@@ -27,42 +26,65 @@ class View
         {
             let theta = this.degreesToRadians(degrees);
 
-            let polar = new Polar(0, theta);
-            polar.setCenter(charge.x, charge.y);
-            let point = polar.toCartesian();
+            let currentTrace = new Trace(this.ctx);
 
-            this.ctx.beginPath();
-            this.ctx.moveTo(point.x, point.y);
+            let focusedCharge = aCharge;
+
+            let particle = new Particle(0, theta, focusedCharge.charge);
+            particle.setCenter(focusedCharge.point);
+
+            let point = particle.getPoint();
+
+            currentTrace.addPoint(point);
 
             do
-            {                
-                polar.r++;
-                point = polar.toCartesian();
+            {
+                particle.move();
 
-                let index = this.getIndexOfMaxPotential(point);
-                if(index >= 0 && index != charge.index)
+                point = particle.getPoint();
+
+                let charge = this.getMostValuableCharge(point);
+
+                if(!charge.point.isPointEqual(focusedCharge.point))
                 {
-                    // this.ctx.lineTo(point.x, point.y);
-                    // this.ctx.stroke();
-                    // let ch = this.charges[index];
-                    // let deltaTheta = this.angleRadians(point, {x: ch.x, y: ch.y });
-                    // let deltaDegrees = this.angleDegrees(point, {x: ch.x, y: ch.y });
+                    focusedCharge = charge;
+
+                    let deltaDegrees = this.angleDegrees(point, charge.point);
+                
+                    // deltaDegrees = this.anglesMinus(180, deltaDegrees);
+                    particle.theta = this.degreesToRadians(deltaDegrees);
+                    particle.setCenter(point);
+    
+                    if (!currentTrace.addPoint(point))
+                    {
+                        let deltaDegrees = this.angleDegrees(point, charge.point);
+                        deltaDegrees = this.anglesAdd(deltaDegrees, 90);
+                    
+                        // deltaDegrees = this.anglesMinus(180, deltaDegrees);
+                        particle.theta = this.degreesToRadians(deltaDegrees);                       
+                    }
+    
                     // if (deltaDegrees == 180 || deltaDegrees == 0)
                     // {
                     //     break;
                     // }
-                    // deltaDegrees = degrees + deltaDegrees;
-                    // polar.theta = this.degreesToRadians(deltaDegrees);
-                    // polar.r = 0;
-                    // polar.setCenter(point.x, point.y);
-
-
-                    break;
+                        // deltaDegrees = degrees + deltaDegrees;
+                        // polar.theta = this.degreesToRadians(deltaDegrees);
+                        // polar.r = 0;
+                        // polar.setCenter(point.x, point.y);
+    
+                    // if(charge2.isPointNear(point))
+                    // {
+                    //     break;
+                    // }
                 }
             }
             while(!this.isPointOutOfBounds(point));
-            this.ctx.lineTo(point.x, point.y);
-            this.ctx.stroke();
+
+            currentTrace.addPoint(point);
+            currentTrace.finish();
+            currentTrace.draw();
+
         }
     }
 
@@ -78,6 +100,21 @@ class View
 
 ///////////////////////////////////////////////////////////////////////////////
 
+    // isSignEqual(aNumber1, aNumber2)
+    // {
+    //     let result = false;
+
+    //     if(aNumber1 > 0 && aNumber2 > 0)
+
+    //     return result;
+    // }
+
+    isPosEqual(aPoint1, aPoint2)
+    {
+        return aPoint1.x == aPoint2.x && 
+            aPoint1.y == aPoint2.y;
+    }
+
     angleRadians(anchorPoint, point)
     {
         return Math.atan2(anchorPoint.y - point.y, anchorPoint.x - point.x) * 180 / Math.PI + 180
@@ -87,6 +124,26 @@ class View
     {
         return Math.atan2(anchorPoint.y - point.y, anchorPoint.x - point.x) * 180 / Math.PI;
         // return Math.atan2(anchorPoint.y - point.y, anchorPoint.x - point.x) * 180 / Math.PI + 180
+    }
+
+    anglesAdd(aDegrees1, aDegrees2)
+    {
+        let result = aDegrees1 + aDegrees2;
+        if (result > 360)
+        {
+            result = 360 - result;
+        }
+        return result;
+    }
+
+    anglesMinus(aDegrees1, aDegrees2)
+    {
+        let result = aDegrees1 - aDegrees2;
+        if(result < 0)
+        {
+            result = 360 - result;
+        }
+        return result;
     }
 
 // const angle = (anchor, point) => Math.atan2(anchor.y - point.y, anchor.x - point.x) * 180 / Math.PI + 180;
@@ -106,17 +163,18 @@ class View
 // // angle in degrees, from example, same data
 // angleDeg = Math.atan2(a.y - p.y, a.x - p.x) * 180 / Math.PI; // 45
 
-    getIndexOfMaxPotential(point)
+    getMostValuableCharge(point)
     {
         let arr = this.calculatePotentialsForPoint(point);
         let maxPotential = arr[0];
-        let result = 0;
+        let result = this.charges[0];
+
         for (let i=0; i<this.charges.length; i++)
         {
             if (arr[i] > maxPotential)
             {
                 maxPotential = arr[i];
-                result = i;
+                result = this.charges[i];
                 break;
             }
         }
@@ -130,7 +188,7 @@ class View
         for (let i=0; i<this.charges.length; i++)
         {
             let charge = this.charges[i];
-            let d = this.distance(point, charge);
+            let d = point.distance(charge.point);
             potentials.push(d);
         }        
 
@@ -174,15 +232,6 @@ class View
             result[i] = 1 - result[i];
         }
         return result;
-    }
-
-    distance(point1, point2)
-    {
-        let a = Math.abs(point1.x - point2.x);
-        let b = Math.abs(point1.y - point2.y);
-
-        let c = Math.sqrt( a*a + b*b );
-        return c;
     }
 
     isPointOutOfBounds(point)

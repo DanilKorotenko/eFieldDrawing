@@ -1,30 +1,34 @@
 
-class Polar
+class Particle
 {
-    constructor(anR, aTheta)
+    constructor(anR, aTheta, aCharge)
     {
         this.r = anR;
         this.theta = aTheta;
-        this.dx = 0;
-        this.dy = 0;
+        this.center = new Point(0,0);
+        this.charge = aCharge;
     }
 
-    setCenter(anX, anY)
+    setCenter(aPoint)
     {
-        this.dx = anX;
-        this.dy = anY;
+        this.center = aPoint;
+        this.r = 0;
     }
 
-    toCartesian()
+    move()
     {
-        let result = 
-        { 
-            x: this.dx + (this.r * Math.cos(this.theta)),
-            y: this.dy + (this.r * Math.sin(this.theta))
-        };
-
-        return result;
+        this.r++;
     }
+
+    getPoint()
+    {
+        let x = this.center.x + (this.r * Math.cos(this.theta));
+        let y = this.center.y + (this.r * Math.sin(this.theta));
+        let point = new Point(x, y); 
+
+        return point;
+    }
+
 }
 
 // Given an object in Cartesian coordinates { x: …, y: … }
