@@ -58,7 +58,7 @@ class View
                             b = true;
                             break;
                         }
-                    
+
                         let e1 = charge2.getElectricField(r.point.x, r.point.y);
                         e.add(e1);
                     }
