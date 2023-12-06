@@ -4,8 +4,8 @@ class Point
 
     constructor(anX, anY)
     {
-        this.x = anX;
-        this.y = anY;
+        this.x = Math.round(anX);
+        this.y = Math.round(anY);
     }
 
     isPointNear(aPoint)
@@ -16,9 +16,15 @@ class Point
         return xIsNear && yIsNear;
     }
 
+    isFloatEqual(aFloat1, aFloat2)
+    {
+        return Math.abs(aFloat1 - aFloat2) < 1;
+    }
+
     isPointEqual(aPoint)
     {
-        return this.x == aPoint.x && this.y == aPoint.y;
+        return this.isFloatEqual(this.x, aPoint.x) && 
+            this.isFloatEqual(this.y, aPoint.y);
     }
 
     distance(aPoint)
