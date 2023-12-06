@@ -13,12 +13,19 @@ class Charge
     {
         let dx = this.x - x;
         let dy = this.y - y;
-        let rSquare = ((dx*dx) + (dy * dy))
+        let rSquare = ((dx * dx) + (dy * dy))
 
         let angle = Math.atan2(y - this.y, x - this.x);
 
         let m = Charge.k * this.q / rSquare;
 
-        return [Math.cos(angle) * m, Math.sin(angle) * m];
+        let e = new ElectricField(Math.cos(angle) * m, Math.sin(angle) * m);
+
+        return e;
+    }
+
+    getPoint()
+    {
+        return new Point(this.x, this.y);
     }
 }
