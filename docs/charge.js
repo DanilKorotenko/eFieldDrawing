@@ -1,19 +1,24 @@
 class Charge
 {
-    static radius = 10;
+    static k = 5000.;
 
-    constructor(aCtx, anX, anY, aCharge)
+    constructor(x, y, q)
     {
-        this.ctx = aCtx;
-        this.point = new Point(anX, anY);
-        this.charge = aCharge;
+        this.x = x;
+        this.y = y;
+        this.q = q;
     }
 
-    draw()
+    getElectricField(x,y)
     {
-        this.ctx.beginPath();
-        this.ctx.arc(this.point.x, this.point.y, Charge.radius, 0, 2 * Math.PI);
-        this.ctx.fill();
-    }
+        let dx = this.x - x;
+        let dy = this.y - y;
+        let rSquare = ((dx*dx) + (dy * dy))
 
+        let angle = Math.atan2(y - this.y, x - this.x);
+
+        let m = Charge.k * this.q / rSquare;
+
+        return [Math.cos(angle) * m, Math.sin(angle) * m];
+    }
 }
