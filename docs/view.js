@@ -48,6 +48,7 @@ class View
 
                 do
                 {
+                    console.log("***********************");
                     let e = new ElectricField(0,0);
                     let b = false;
                     for(let j=0; j<this.charges.length; j++)
@@ -60,6 +61,9 @@ class View
                         }
 
                         let e1 = charge2.getElectricField(r.point.x, r.point.y);
+
+                        console.log(charge2.name + ": " + e1.x + ", " + e1.y);
+
                         e.add(e1);
                     }
                     
@@ -69,6 +73,13 @@ class View
                     }
 
                     r.addEField(e);
+
+                    if (r.point.x > 390)
+                    {
+                        console.log("11");
+                    }
+
+                    console.log("point: " + r.point.x + ", " + r.point.y);
 
                     this.ctx.lineTo(r.point.x, r.point.y);
                 }
