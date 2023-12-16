@@ -1,6 +1,6 @@
 class Charge
 {
-    static k = 5000.;
+    static k = 5000;
 
     constructor(x, y, q, name)
     {
@@ -10,21 +10,21 @@ class Charge
         this.name = name;
     }
 
-    getElectricField(x,y)
+    getElectricField(x, y)
     {
-        let dx = this.x - x;
-        let dy = this.y - y;
-        let rSquare = ((dx * dx) + (dy * dy))
+        const dx = this.x - x;
+        const dy = this.y - y;
+        const rSquare = ((dx * dx) + (dy * dy));
 
-        let angle = Math.atan2(y - this.y, x - this.x);
+        const angle = Math.atan2(y - this.y, x - this.x);
 
         // let m = Charge.k * Math.abs(this.q) / rSquare;
-        let m = Charge.k * this.q / rSquare;
+        const m = Charge.k * this.q / rSquare;
 
-        let cosAngle = Math.cos(angle);
-        let sinAngle = Math.sin(angle);
+        const cosAngle = Math.cos(angle);
+        const sinAngle = Math.sin(angle);
 
-        let e = new ElectricField(Math.cos(angle) * m, Math.sin(angle) * m);
+        const e = new ElectricField(Math.cos(angle) * m, Math.sin(angle) * m);
 
         return e;
     }
@@ -36,8 +36,8 @@ class Charge
 
     isSignsEqual(charge2)
     {
-        let thisPositive = this.q >=0;
-        let rightPositive = charge2.q >=0;
+        const thisPositive = this.q >= 0;
+        const rightPositive = charge2.q >= 0;
 
         if (thisPositive && rightPositive)
         {

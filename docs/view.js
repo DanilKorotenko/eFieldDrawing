@@ -1,4 +1,3 @@
-
 class View
 {
     static numTraces = 10;
@@ -11,7 +10,7 @@ class View
         this.maxHeight = maxHeight;
     }
 
-///////////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////////
     addCharge(x, y, q)
     {
         this.charges.push(new Charge(x, y, q));
@@ -19,29 +18,29 @@ class View
 
     enumerateAllChargesWithCallback(aCallback)
     {
-        for (let i=0; i<this.charges.length; i++)
+        for (let i = 0; i < this.charges.length; i++)
         {
-            let charge = this.charges[i];
+            const charge = this.charges[i];
             aCallback(charge);
         }
     }
 
-///////////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////////
 
     draw()
     {
         this.ctx.strokeStyle = "#000";
-        for (let i=0; i<this.charges.length; i++)
+        for (let i = 0; i < this.charges.length; i++)
         {
-            let charge = this.charges[i];
-            if(charge.q < 0) 
+            const charge = this.charges[i];
+            if (charge.q < 0)
             {
                 continue;
             }
 
-            for(let a = 0.; a<2.*Math.PI; a+=Math.PI/8.) 
+            for (let a = 0; a < 2 * Math.PI; a += Math.PI / 8)
             {
-                let r = new Particle(a, charge.getPoint());
+                const r = new Particle(a, charge.getPoint());
 
                 this.ctx.beginPath();
                 this.ctx.moveTo(r.point.x, r.point.y);
@@ -49,25 +48,25 @@ class View
                 do
                 {
                     console.log("***********************");
-                    let e = new ElectricField(0,0);
+                    const e = new ElectricField(0, 0);
                     let b = false;
-                    for(let j=0; j<this.charges.length; j++)
+                    for (let j = 0; j < this.charges.length; j++)
                     {
-                        let charge2 = this.charges[j];
-                        if( charge2.getPoint().distance(r.point) < 10 )
+                        const charge2 = this.charges[j];
+                        if (charge2.getPoint().distance(r.point) < 10)
                         {
                             b = true;
                             break;
                         }
 
-                        let e1 = charge2.getElectricField(r.point.x, r.point.y);
+                        const e1 = charge2.getElectricField(r.point.x, r.point.y);
 
                         console.log(charge2.name + ": " + e1.x + ", " + e1.y);
 
                         e.add(e1);
                     }
-                    
-                    if(b) 
+
+                    if (b)
                     {
                         break;
                     }
@@ -83,21 +82,20 @@ class View
 
                     this.ctx.lineTo(r.point.x, r.point.y);
                 }
-                while(!this.isPointOutOfBounds(r.point))
+                while (!this.isPointOutOfBounds(r.point));
 
                 this.ctx.stroke();
             }
         }
     }
 
-///////////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////////
 
     isPointOutOfBounds(point)
     {
-        return point.x < 0 || 
+        return point.x < 0 ||
             point.x > this.maxWidth ||
             point.y < 0 ||
             point.y > this.maxHeight;
     }
-
 }

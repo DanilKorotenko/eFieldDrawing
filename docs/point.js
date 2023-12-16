@@ -8,11 +8,10 @@ class Point
 
     distance(aPoint)
     {
-        let a = Math.abs(this.x - aPoint.x);
-        let b = Math.abs(this.y - aPoint.y);
+        const a = Math.abs(this.x - aPoint.x);
+        const b = Math.abs(this.y - aPoint.y);
 
-        let c = Math.sqrt( a*a + b*b );
+        const c = Math.sqrt(a * a + b * b);
         return c;
     }
-
 }

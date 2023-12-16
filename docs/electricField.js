@@ -17,5 +17,4 @@ class ElectricField
         this.x -= efield.x;
         this.y -= efield.y;
     }
-
 }

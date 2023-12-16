@@ -1,21 +1,20 @@
-
 function updateUI()
 {
-        //TODO: read parameters from inputs
+    // TODO: read parameters from inputs
 
-    //TODO: process parameters in model
-  
-    let canvas = document.getElementById('canvas');
+    // TODO: process parameters in model
 
-    let maxHeight = canvas.height;
-    let maxWidth = canvas.width;
+    const canvas = document.getElementById('canvas');
 
-    let ctx = canvas.getContext('2d');
+    const maxHeight = canvas.height;
+    const maxWidth = canvas.width;
 
-    let view = new View(ctx, maxWidth, maxHeight);
+    const ctx = canvas.getContext('2d');
 
-    view.charges.push(new Charge(maxWidth/2-100, maxHeight/2, 10, "charge +10"));
-    view.charges.push(new Charge(maxWidth/2+100, maxHeight/2, -10, "charge -10"));
+    const view = new View(ctx, maxWidth, maxHeight);
+
+    view.charges.push(new Charge(maxWidth / 2 - 100, maxHeight / 2, 10, "charge +10"));
+    view.charges.push(new Charge(maxWidth / 2 + 100, maxHeight / 2, -10, "charge -10"));
 
     view.draw();
 }

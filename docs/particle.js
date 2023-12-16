@@ -1,4 +1,3 @@
-
 class Particle
 {
     constructor(aTheta, aPoint)
@@ -12,9 +11,9 @@ class Particle
 
     getStartPoint()
     {
-        let x = this.center.x + (this.r * Math.cos(this.theta));
-        let y = this.center.y + (this.r * Math.sin(this.theta));
-        let point = new Point(x, y); 
+        const x = this.center.x + (this.r * Math.cos(this.theta));
+        const y = this.center.y + (this.r * Math.sin(this.theta));
+        const point = new Point(x, y);
 
         return point;
     }
