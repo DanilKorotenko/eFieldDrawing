@@ -1,6 +1,6 @@
 class View
 {
-    static numTraces = 10;
+    static numTraces = 40;
 
     constructor(ctx, maxWidth, maxHeight)
     {
@@ -15,6 +15,7 @@ class View
     {
         this.charges.push(new Charge(x, y, q));
     }
+    // /////////////////////////////////////////////////////////////////////////////
 
     enumerateAllChargesWithCallback(aCallback)
     {
@@ -30,16 +31,15 @@ class View
     draw()
     {
         this.ctx.strokeStyle = "#000";
+        const degreesStep = 360 / View.numTraces;
+
         for (let i = 0; i < this.charges.length; i++)
         {
             const charge = this.charges[i];
-            if (charge.q < 0)
-            {
-                continue;
-            }
 
-            for (let a = 0; a < 2 * Math.PI; a += Math.PI / 8)
+            for (let degrees = 1; degrees < 360; degrees = degrees + degreesStep)
             {
+                const a = this.degreesToRadians(degrees);
                 const r = new Particle(a, charge.getPoint());
 
                 this.ctx.beginPath();
@@ -47,7 +47,6 @@ class View
 
                 do
                 {
-                    console.log("***********************");
                     const e = new ElectricField(0, 0);
                     let b = false;
                     for (let j = 0; j < this.charges.length; j++)
@@ -59,10 +58,7 @@ class View
                             break;
                         }
 
-                        const e1 = charge2.getElectricField(r.point.x, r.point.y);
-
-                        console.log(charge2.name + ": " + e1.x + ", " + e1.y);
-
+                        const e1 = charge2.getElectricField(r.point.x, r.point.y, charge.isPositive());
                         e.add(e1);
                     }
 
@@ -72,13 +68,6 @@ class View
                     }
 
                     r.addEField(e);
-
-                    if (r.point.x > 390)
-                    {
-                        console.log("11");
-                    }
-
-                    console.log("point: " + r.point.x + ", " + r.point.y);
 
                     this.ctx.lineTo(r.point.x, r.point.y);
                 }
@@ -97,5 +86,10 @@ class View
             point.x > this.maxWidth ||
             point.y < 0 ||
             point.y > this.maxHeight;
+    }
+
+    degreesToRadians(degrees)
+    {
+        return degrees * (Math.PI / 180);
     }
 }

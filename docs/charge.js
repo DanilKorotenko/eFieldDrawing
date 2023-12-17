@@ -1,53 +1,49 @@
 class Charge
 {
     static k = 5000;
+    static radius = 10;
+    static numTraces = 10;
 
-    constructor(x, y, q, name)
+    constructor(x, y, q)
     {
         this.x = x;
         this.y = y;
         this.q = q;
-        this.name = name;
     }
 
-    getElectricField(x, y)
+    getElectricField(x, y, anIsPositive)
     {
         const dx = this.x - x;
         const dy = this.y - y;
         const rSquare = ((dx * dx) + (dy * dy));
 
-        const angle = Math.atan2(y - this.y, x - this.x);
+        let angle = 0;
 
-        // let m = Charge.k * Math.abs(this.q) / rSquare;
+        if ((this.isPositive() && anIsPositive) || (!this.isPositive() && !anIsPositive))
+        {
+            angle = Math.atan2(this.y - y, this.x - x);
+            angle = angle + Math.PI;
+        }
+        else
+        {
+            angle = Math.atan2(y - this.y, x - this.x);
+        }
+
+        // const m = Charge.k * Math.abs(this.q) / rSquare;
         const m = Charge.k * this.q / rSquare;
-
-        const cosAngle = Math.cos(angle);
-        const sinAngle = Math.sin(angle);
 
         const e = new ElectricField(Math.cos(angle) * m, Math.sin(angle) * m);
 
         return e;
     }
 
+    isPositive()
+    {
+        return this.q >= 0;
+    }
+
     getPoint()
     {
         return new Point(this.x, this.y);
-    }
-
-    isSignsEqual(charge2)
-    {
-        const thisPositive = this.q >= 0;
-        const rightPositive = charge2.q >= 0;
-
-        if (thisPositive && rightPositive)
-        {
-            return true;
-        }
-        else if (!thisPositive && !rightPositive)
-        {
-            return true;
-        }
-
-        return false;
     }
 }

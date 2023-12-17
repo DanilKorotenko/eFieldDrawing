@@ -2,7 +2,7 @@ class Particle
 {
     constructor(aTheta, aPoint)
     {
-        this.r = 10;
+        this.r = 20;
         this.theta = aTheta;
         this.center = aPoint;
 
