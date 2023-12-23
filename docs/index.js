@@ -1,4 +1,5 @@
 let view = null;
+let options = null;
 
 function collectInputParameters()
 {
@@ -9,6 +10,33 @@ function collectInputParameters()
         q:              +document.getElementById("q").value,
     };
     return result;
+}
+
+function addCharge()
+{
+    view.charges.push(new Charge(options.maxWidth / 2, options.maxHeight / 2, 100));
+    updateUI();
+}
+
+function removeCharge()
+{
+    let indexSelected = -1;
+
+    for (let i = 0; i < view.charges.length; i++)
+    {
+        const charge = view.charges[i];
+        if (charge.isSelected)
+        {
+            indexSelected = i;
+            break;
+        }
+    }
+
+    if (indexSelected > -1)
+    {
+        view.charges.splice(indexSelected, 1); // 2nd parameter means remove one item only
+    }
+    updateUI();
 }
 
 function updateUI()
@@ -72,7 +100,7 @@ function onload()
     canvas.addEventListener('mousemove', mouseMoveEvent);
     canvas.addEventListener('mouseup', mouseUpEvent);
 
-    const options =
+    options =
         {
             maxHeight: canvas.height,
             maxWidth: canvas.width,
