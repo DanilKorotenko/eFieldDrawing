@@ -14,6 +14,23 @@ class Charge
         ctx.beginPath();
         ctx.arc(this.point.x, this.point.y, options.chargeRadius, 0, 2 * Math.PI);
         ctx.fill();
+
+        if (this.isSelected)
+        {
+            const x1 = this.point.x - options.chargeRadius;
+            const x2 = this.point.x + options.chargeRadius;
+
+            const y1 = this.point.y - options.chargeRadius;
+            const y2 = this.point.y + options.chargeRadius;
+
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y1);
+            ctx.lineTo(x2, y2);
+            ctx.lineTo(x1, y2);
+            ctx.lineTo(x1, y1);
+            ctx.stroke();
+        }
     }
 
     getElectricField(x, y, anIsPositive)

@@ -4,8 +4,8 @@ function collectInputParameters()
 {
     const result =
     {
-        numTraces:      document.getElementById("numTraces").value,
-        chargeRadius:   document.getElementById("chargeRadius").value,
+        numTraces:      +document.getElementById("numTraces").value,
+        chargeRadius:   +document.getElementById("chargeRadius").value,
     };
     return result;
 }
@@ -21,7 +21,8 @@ function updateUI()
 
 function mouseDownEvent(event)
 {
-    view.mouseDown(event.offsetX, event.offsetY);
+    const point = new Point(event.offsetX, event.offsetY);
+    view.mouseDown(point);
 }
 
 function onload()

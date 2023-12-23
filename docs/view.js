@@ -9,9 +9,42 @@ class View
 
     // /////////////////////////////////////////////////////////////////////////////
 
-    mouseDown(x, y)
+    getChargeOnPoint(point)
     {
-        console.log(`view mousedown: ${x}, ${y}`);
+        let result = null;
+        for (let i = 0; i < this.charges.length; i++)
+        {
+            const charge = this.charges[i];
+            if (charge.point.distance(point) < this.options.chargeRadius)
+            {
+                result = charge;
+                break;
+            }
+        }
+        return result;
+    }
+
+    clearSelection()
+    {
+        for (let i = 0; i < this.charges.length; i++)
+        {
+            const charge = this.charges[i];
+            charge.isSelected = false;
+        }
+    }
+
+    mouseDown(point)
+    {
+        const charge = this.getChargeOnPoint(point);
+        if (charge)
+        {
+            charge.isSelected = true;
+        }
+        else
+        {
+            this.clearSelection();
+        }
+        this.draw();
     }
 
     // /////////////////////////////////////////////////////////////////////////////
