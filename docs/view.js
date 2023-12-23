@@ -24,6 +24,10 @@ class View
         {
             const charge = this.charges[i];
 
+            this.ctx.beginPath();
+            this.ctx.arc(charge.getPoint().x, charge.getPoint().y, this.options.chargeRadius, 0, 2 * Math.PI);
+            this.ctx.fill();
+
             for (let degrees = 1; degrees < 360; degrees = degrees + degreesStep)
             {
                 const a = this.degreesToRadians(degrees);

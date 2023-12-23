@@ -4,7 +4,8 @@ function collectInputParameters()
 {
     const result =
     {
-        numTraces: document.getElementById("numTraces").value,
+        numTraces:      document.getElementById("numTraces").value,
+        chargeRadius:   document.getElementById("chargeRadius").value,
     };
     return result;
 }
@@ -13,6 +14,8 @@ function updateUI()
 {
     const inputParameters = collectInputParameters();
     view.options.numTraces = inputParameters.numTraces;
+    view.options.chargeRadius = inputParameters.chargeRadius;
+
     view.draw();
 }
 
@@ -29,6 +32,7 @@ function onload()
         };
 
     document.getElementById("numTraces").value = options.numTraces;
+    document.getElementById("chargeRadius").value = options.chargeRadius;
 
     const ctx = canvas.getContext('2d');
 
