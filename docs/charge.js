@@ -13,24 +13,24 @@ class Charge
 
     getElectricField(x, y, anIsPositive)
     {
-        const dx = this.x - x;
-        const dy = this.y - y;
+        const dx = x - this.x;
+        const dy = y - this.y;
         const rSquare = ((dx * dx) + (dy * dy));
 
-        let angle = 0;
+        let angle = Math.atan2(dy, dx);
 
         if ((this.isPositive() && anIsPositive) || (!this.isPositive() && !anIsPositive))
         {
-            angle = Math.atan2(this.y - y, this.x - x);
-            angle = angle + Math.PI;
+            // angle = angle + Math.PI;
         }
         else
         {
-            angle = Math.atan2(y - this.y, x - this.x);
+            angle = angle + Math.PI;
+            // angle = Math.atan2(y - this.y, x - this.x);
         }
 
-        // const m = Charge.k * Math.abs(this.q) / rSquare;
-        const m = Charge.k * this.q / rSquare;
+        const m = Charge.k * Math.abs(this.q) / rSquare;
+        // const m = Charge.k * this.q / rSquare;
 
         const e = new ElectricField(Math.cos(angle) * m, Math.sin(angle) * m);
 

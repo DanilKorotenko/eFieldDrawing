@@ -37,6 +37,11 @@ class View
         {
             const charge = this.charges[i];
 
+            if (!charge.isPositive())
+            {
+                console.log();
+            }
+
             for (let degrees = 1; degrees < 360; degrees = degrees + degreesStep)
             {
                 const a = this.degreesToRadians(degrees);
