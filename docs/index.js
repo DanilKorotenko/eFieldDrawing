@@ -19,9 +19,16 @@ function updateUI()
     view.draw();
 }
 
+function mouseDownEvent(event)
+{
+    view.mouseDown(event.offsetX, event.offsetY);
+}
+
 function onload()
 {
     const canvas = document.getElementById('canvas');
+
+    canvas.addEventListener('mousedown', mouseDownEvent);
 
     const options =
         {

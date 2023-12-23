@@ -9,6 +9,13 @@ class View
 
     // /////////////////////////////////////////////////////////////////////////////
 
+    mouseDown(x, y)
+    {
+        console.log(`view mousedown: ${x}, ${y}`);
+    }
+
+    // /////////////////////////////////////////////////////////////////////////////
+
     clearCanvas()
     {
         this.ctx.clearRect(0, 0, this.options.maxWidth, this.options.maxHeight);
@@ -24,14 +31,12 @@ class View
         {
             const charge = this.charges[i];
 
-            this.ctx.beginPath();
-            this.ctx.arc(charge.getPoint().x, charge.getPoint().y, this.options.chargeRadius, 0, 2 * Math.PI);
-            this.ctx.fill();
+            charge.draw(this.ctx, this.options);
 
             for (let degrees = 1; degrees < 360; degrees = degrees + degreesStep)
             {
                 const a = this.degreesToRadians(degrees);
-                const r = new Particle(a, charge.getPoint());
+                const r = new Particle(a, charge.point);
 
                 this.ctx.beginPath();
                 this.ctx.moveTo(r.point.x, r.point.y);
@@ -43,7 +48,7 @@ class View
                     for (let j = 0; j < this.charges.length; j++)
                     {
                         const charge2 = this.charges[j];
-                        if (charge2.getPoint().distance(r.point) < 10)
+                        if (charge2.point.distance(r.point) < 10)
                         {
                             b = true;
                             break;

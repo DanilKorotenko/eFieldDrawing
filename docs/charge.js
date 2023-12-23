@@ -4,15 +4,22 @@ class Charge
 
     constructor(x, y, q)
     {
-        this.x = x;
-        this.y = y;
+        this.point = new Point(x, y);
         this.q = q;
+        this.isSelected = false;
+    }
+
+    draw(ctx, options)
+    {
+        ctx.beginPath();
+        ctx.arc(this.point.x, this.point.y, options.chargeRadius, 0, 2 * Math.PI);
+        ctx.fill();
     }
 
     getElectricField(x, y, anIsPositive)
     {
-        const dx = x - this.x;
-        const dy = y - this.y;
+        const dx = x - this.point.x;
+        const dy = y - this.point.y;
         const rSquare = ((dx * dx) + (dy * dy));
 
         let angle = Math.atan2(dy, dx);
@@ -37,10 +44,5 @@ class Charge
     isPositive()
     {
         return this.q >= 0;
-    }
-
-    getPoint()
-    {
-        return new Point(this.x, this.y);
     }
 }
