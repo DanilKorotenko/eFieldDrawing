@@ -48,5 +48,10 @@ module.exports = {
                     },
                 },
             ],
+        "key-spacing":
+            [
+                "error", { mode: "minimum", },
+            ],
+
     },
 };

@@ -1,7 +1,18 @@
 let view = null;
 
+function collectInputParameters()
+{
+    const result =
+    {
+        numTraces: document.getElementById("numTraces").value,
+    };
+    return result;
+}
+
 function updateUI()
 {
+    const inputParameters = collectInputParameters();
+    view.options.numTraces = inputParameters.numTraces;
     view.draw();
 }
 
@@ -16,6 +27,8 @@ function onload()
             chargeRadius: 10,
             numTraces: 40,
         };
+
+    document.getElementById("numTraces").value = options.numTraces;
 
     const ctx = canvas.getContext('2d');
 
