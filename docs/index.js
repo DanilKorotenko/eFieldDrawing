@@ -66,6 +66,7 @@ function mouseDownEvent(event)
 
 function mouseMoveEvent(event)
 {
+    //
     const point = new Point(event.offsetX, event.offsetY);
     view.mouseMove(point);
 }
