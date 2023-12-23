@@ -1,25 +1,67 @@
-table {
+body 
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+table 
+{
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
 }
 
-th, td {
+th, td 
+{
     border: 1px solid #ddd;
     padding: 10px;
     text-align: left;
 }
 
-th {
+th 
+{
     background-color: #f2f2f2;
 }
 
-input{
-width: 30px; 
+input
+{
+    width: 30px; 
 }
+
 div
 {
     width: max-content; 
     height: max-content; 
 }
 
+input
+{
+    border: 1.5px solid black;
+    width: 80px;
+    text-align: center;
+    font-size: 15px;
+}
+
+canvas 
+{
+    background-color: white;
+    border: 1px solid rgb(78, 74, 74);
+}
+
+td
+{
+    padding: 5px;
+    text-align: left;
+    vertical-align: top;
+    border: 1px solid black;
+    background-color: rgba(128, 128, 128, 0.438);
+}
+
+.uniqueStyle 
+{
+width: 800px;
+height: 5px
+}

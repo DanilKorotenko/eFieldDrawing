@@ -1,46 +1,28 @@
 class View
 {
-    static numTraces = 40;
-
-    constructor(ctx, maxWidth, maxHeight)
+    constructor(ctx, options)
     {
         this.ctx = ctx;
         this.charges = [];
-        this.maxWidth = maxWidth;
-        this.maxHeight = maxHeight;
+        this.options = options;
     }
 
     // /////////////////////////////////////////////////////////////////////////////
-    addCharge(x, y, q)
+
+    clearCanvas()
     {
-        this.charges.push(new Charge(x, y, q));
+        this.ctx.clearRect(0, 0, this.options.maxWidth, this.options.maxHeight);
     }
-    // /////////////////////////////////////////////////////////////////////////////
-
-    enumerateAllChargesWithCallback(aCallback)
-    {
-        for (let i = 0; i < this.charges.length; i++)
-        {
-            const charge = this.charges[i];
-            aCallback(charge);
-        }
-    }
-
-    // /////////////////////////////////////////////////////////////////////////////
 
     draw()
     {
+        this.clearCanvas();
         this.ctx.strokeStyle = "#000";
-        const degreesStep = 360 / View.numTraces;
+        const degreesStep = 360 / this.options.numTraces;
 
         for (let i = 0; i < this.charges.length; i++)
         {
             const charge = this.charges[i];
-
-            if (!charge.isPositive())
-            {
-                console.log();
-            }
 
             for (let degrees = 1; degrees < 360; degrees = degrees + degreesStep)
             {
@@ -88,9 +70,9 @@ class View
     isPointOutOfBounds(point)
     {
         return point.x < 0 ||
-            point.x > this.maxWidth ||
+            point.x > this.options.maxWidth ||
             point.y < 0 ||
-            point.y > this.maxHeight;
+            point.y > this.options.maxHeight;
     }
 
     degreesToRadians(degrees)
