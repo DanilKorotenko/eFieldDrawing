@@ -24,6 +24,21 @@ class View
         return result;
     }
 
+    getSelectedCharge()
+    {
+        let result = null;
+        for (let i = 0; i < this.charges.length; i++)
+        {
+            const charge = this.charges[i];
+            if (charge.isSelected)
+            {
+                result = charge;
+                break;
+            }
+        }
+        return result;
+    }
+
     clearSelection()
     {
         for (let i = 0; i < this.charges.length; i++)
@@ -35,6 +50,7 @@ class View
 
     mouseDown(point)
     {
+        this.isDragging = true;
         const charge = this.getChargeOnPoint(point);
         if (charge)
         {
@@ -45,6 +61,24 @@ class View
             this.clearSelection();
         }
         this.draw();
+    }
+
+    mouseMove(point)
+    {
+        if (this.isDragging)
+        {
+            const charge = this.getSelectedCharge();
+            if (charge)
+            {
+                charge.point = point;
+                this.draw();
+            }
+        }
+    }
+
+    mouseUp(point)
+    {
+        this.isDragging = false;
     }
 
     // /////////////////////////////////////////////////////////////////////////////

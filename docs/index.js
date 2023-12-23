@@ -25,11 +25,27 @@ function mouseDownEvent(event)
     view.mouseDown(point);
 }
 
+function mouseMoveEvent(event)
+{
+    const point = new Point(event.offsetX, event.offsetY);
+    view.mouseMove(point);
+}
+
+function mouseUpEvent(event)
+{
+    const point = new Point(event.offsetX, event.offsetY);
+    view.mouseUp(point);
+}
+
+// ////////////////////////////////////////////////////////////////////////////
+
 function onload()
 {
     const canvas = document.getElementById('canvas');
 
     canvas.addEventListener('mousedown', mouseDownEvent);
+    canvas.addEventListener('mousemove', mouseMoveEvent);
+    canvas.addEventListener('mouseup', mouseUpEvent);
 
     const options =
         {

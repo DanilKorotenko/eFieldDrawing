@@ -20,56 +20,22 @@
     <body>
         <canvas id="canvas" width="800" height="400">  </canvas>
         <table style="margin: auto;">
-        
-        <tr>
-            <td>
-                <p>Options</p>
-                <label for="numTraces">Number of Traces</label>
-                <input type="range" id="numTraces" min="1" max="100" oninput="updateUI()">
-                <br>
-                <label for="chargeRadius">Charge Radius</label>
-                <input type="number" id="chargeRadius" min="10" onchange="updateUI()">
-            </td>
+            <tr>
+                <td>
+                    <p>Options</p>
+                    <label for="numTraces">Number of Traces</label>
+                    <input type="range" id="numTraces" min="1" max="100" oninput="updateUI()">
+                    <br>
+                    <label for="chargeRadius">Charge Radius</label>
+                    <input type="number" id="chargeRadius" min="10" onchange="updateUI()">
+                </td>
     
-            <td>
-                <p>Distance (mm)</p>
-                <label for="uy2">Uy</label>
-                <input type="number" id="uy2" name="uy2" min="0">
-                <br>
-                <label for="ue2">Ue</label>
-                <input type="number" id="ue2" name="ue2" min="0">
-                <br>
-                <label for="ue3">Ue</label>
-                <input type="number" id="ue3" name="ue3" min="0">
-            </td>
-    
-            <td>
-                <br><br>
-                <p></p>
-                <label for="uy3">Uy</label>
-                <input type="number" id="uy3" name="uy3" min="0">
-                <br>
-                <label for="ue4">Ue</label>
-                <input type="number" id="ue4" name="ue4" min="0">
-                <br>
-                <label for="ue5">Ue</label>
-                <input type="number" id="ue5" name="ue5" min="0">
-            </td>
-    
-            <td>
-                <br><br>
-                <p></p>
-                <label for="uy4">Uy</label>
-                <input type="number" id="uy4" name="uy4" min="0">
-                <br>
-            </td>
-    
-            <td>
-                <label for="result">Results</label>
-            </td>
-        </tr>
-    </table>    
+                <td>
+                    <p>Selected Charge</p>
+                    <label for="q">q</label>
+                    <input type="range" id="q" min="-10" max="+10" oninput="updateUI()">
+                </td>
             </tr>
-        </div>
-    </body>    
+        </table>
+    </body>
 </html>
