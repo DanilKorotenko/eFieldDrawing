@@ -24,7 +24,7 @@
                 <td>
                     <p>Options</p>
                     <label for="numTraces">Number of Traces</label>
-                    <input type="range" id="numTraces" min="1" max="100" oninput="updateUI()">
+                    <p><input type="range" id="numTraces" min="1" max="100" oninput="updateUI()"></p>
                     <br>
                     <label for="chargeRadius">Charge Radius</label>
                     <input type="number" id="chargeRadius" min="10" onchange="updateUI()">
@@ -33,7 +33,7 @@
                 <td>
                     <p>Selected Charge</p>
                     <label for="q">q</label>
-                    <input type="range" id="q" min="-10" max="+10" oninput="updateUI()">
+                    <p><input type="range" id="q" min="-100" max="100" oninput="updateUI()"><output id="qValue"></output></p>
                 </td>
             </tr>
         </table>

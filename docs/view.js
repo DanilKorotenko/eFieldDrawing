@@ -51,15 +51,19 @@ class View
     mouseDown(point)
     {
         this.isDragging = true;
+        this.clearSelection();
+
         const charge = this.getChargeOnPoint(point);
         if (charge)
         {
             charge.isSelected = true;
         }
-        else
+
+        if (this.onChargeSelected)
         {
-            this.clearSelection();
+            this.onChargeSelected(charge);
         }
+
         this.draw();
     }
 
