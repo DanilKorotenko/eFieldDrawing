@@ -107,38 +107,21 @@ class View
             for (let degrees = 1; degrees < 360; degrees = degrees + degreesStep)
             {
                 const a = this.degreesToRadians(degrees);
-                const particle = new Particle(a, charge.point);
+                const particle = charge.createParticle(a);
 
                 this.ctx.beginPath();
                 this.ctx.moveTo(particle.point.x, particle.point.y);
 
                 do
                 {
-                    const e = new ElectricField(0, 0);
-                    let b = false;
-                    for (let j = 0; j < this.charges.length; j++)
-                    {
-                        const charge2 = this.charges[j];
-                        if (charge2.point.distance(particle.point) < 10)
-                        {
-                            b = true;
-                            break;
-                        }
-
-                        const e1 = charge2.getElectricField(particle.point.x, particle.point.y, charge.isPositive());
-                        e.add(e1);
-                    }
-
-                    if (b)
-                    {
-                        break;
-                    }
+                    const e = this.calculateTotalEfield(particle);
 
                     particle.addEField(e);
 
                     this.ctx.lineTo(particle.point.x, particle.point.y);
                 }
-                while (!this.isPointOutOfBounds(particle.point));
+                while (!this.isPointOutOfBounds(particle.point) &&
+                    !this.isPointNearAnyCharge(particle.point));
 
                 this.ctx.stroke();
             }
@@ -146,6 +129,35 @@ class View
     }
 
     // /////////////////////////////////////////////////////////////////////////////
+
+    calculateTotalEfield(aParticle)
+    {
+        const result = new ElectricField(0, 0);
+        for (let j = 0; j < this.charges.length; j++)
+        {
+            const charge2 = this.charges[j];
+            const e = charge2.getElectricField(aParticle);
+            result.add(e);
+        }
+        return result;
+    }
+
+    // /////////////////////////////////////////////////////////////////////////////
+
+    isPointNearAnyCharge(point)
+    {
+        let result = false;
+        for (let i = 0; i < this.charges.length; i++)
+        {
+            const charge = this.charges[i];
+            if (charge.point.distance(point) < 10)
+            {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
 
     isPointOutOfBounds(point)
     {

@@ -1,15 +1,16 @@
 class Particle
 {
-    constructor(aTheta, aPoint)
+    constructor(aTheta, aCenterPoint, anIsPositive)
     {
         this.r = 20;
         this.theta = aTheta;
-        this.center = aPoint;
+        this.center = aCenterPoint;
+        this.isPositive = anIsPositive;
 
-        this.point = this.getStartPoint();
+        this.point = this.initPoint();
     }
 
-    getStartPoint()
+    initPoint()
     {
         const x = this.center.x + (this.r * Math.cos(this.theta));
         const y = this.center.y + (this.r * Math.sin(this.theta));

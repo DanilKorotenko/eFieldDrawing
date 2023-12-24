@@ -9,6 +9,12 @@ class Charge
         this.isSelected = false;
     }
 
+    createParticle(angle)
+    {
+        const particle = new Particle(angle, this.point, this.isPositive());
+        return particle;
+    }
+
     draw(ctx, options)
     {
         ctx.beginPath();
@@ -33,15 +39,15 @@ class Charge
         }
     }
 
-    getElectricField(x, y, anIsPositive)
+    getElectricField(aParticle)
     {
-        const dx = x - this.point.x;
-        const dy = y - this.point.y;
+        const dx = aParticle.point.x - this.point.x;
+        const dy = aParticle.point.y - this.point.y;
         const rSquare = ((dx * dx) + (dy * dy));
 
         let angle = Math.atan2(dy, dx);
 
-        if (!this.isSameSign(anIsPositive))
+        if (!this.isSameSign(aParticle.isPositive))
         {
             angle = angle + Math.PI;
         }
