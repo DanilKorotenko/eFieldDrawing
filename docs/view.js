@@ -107,10 +107,10 @@ class View
             for (let degrees = 1; degrees < 360; degrees = degrees + degreesStep)
             {
                 const a = this.degreesToRadians(degrees);
-                const r = new Particle(a, charge.point);
+                const particle = new Particle(a, charge.point);
 
                 this.ctx.beginPath();
-                this.ctx.moveTo(r.point.x, r.point.y);
+                this.ctx.moveTo(particle.point.x, particle.point.y);
 
                 do
                 {
@@ -119,13 +119,13 @@ class View
                     for (let j = 0; j < this.charges.length; j++)
                     {
                         const charge2 = this.charges[j];
-                        if (charge2.point.distance(r.point) < 10)
+                        if (charge2.point.distance(particle.point) < 10)
                         {
                             b = true;
                             break;
                         }
 
-                        const e1 = charge2.getElectricField(r.point.x, r.point.y, charge.isPositive());
+                        const e1 = charge2.getElectricField(particle.point.x, particle.point.y, charge.isPositive());
                         e.add(e1);
                     }
 
@@ -134,11 +134,11 @@ class View
                         break;
                     }
 
-                    r.addEField(e);
+                    particle.addEField(e);
 
-                    this.ctx.lineTo(r.point.x, r.point.y);
+                    this.ctx.lineTo(particle.point.x, particle.point.y);
                 }
-                while (!this.isPointOutOfBounds(r.point));
+                while (!this.isPointOutOfBounds(particle.point));
 
                 this.ctx.stroke();
             }
